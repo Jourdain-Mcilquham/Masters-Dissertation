@@ -39,22 +39,31 @@ class Generator(nn.Sequential):
             nn.BatchNorm1d(gen_filters//2),
             nn.ReLU(True),
 
+            # Conv layer 2
+            # In: 30 X 1 X 1, depth = 200
+            # Out: 60 X 1 X 1, depth = 100
             nn.ConvTranspose1d(in_channels=gen_filters//2, out_channels=gen_filters//4,
                                 kernel_size=filter_size, stride=2, padding = 5, output_padding=1),
             nn.BatchNorm1d(gen_filters//4),
             nn.ReLU(True),
 
+            # Conv layer 3
+            # In: 60 X 1 X 1, depth = 100
+            # Out: 120 X 1 X 1, depth = 50
             nn.ConvTranspose1d(in_channels=gen_filters//4, out_channels=gen_filters//8,
                                 kernel_size=filter_size, stride=2, padding = 5, output_padding=1),
             nn.BatchNorm1d(gen_filters//8),
             nn.ReLU(True),
 
-
+            # Conv layer 4
+            # In: 120 X 1 X 1, depth = 50
+            # Out: 240 X 1 X 1, depth = 25
             nn.ConvTranspose1d(in_channels=gen_filters//8, out_channels=gen_filters//16,
                                 kernel_size=filter_size, stride=2, padding = 5, output_padding=1),
             nn.BatchNorm1d(gen_filters//16),
             nn.ReLU(True),
 
+            # Output layer
             nn.ConvTranspose1d(in_channels=gen_filters//16, out_channels=1, 
                                kernel_size=filter_size, stride = 1, padding=5),
             nn.Sigmoid(),
